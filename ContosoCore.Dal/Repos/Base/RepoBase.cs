@@ -6,51 +6,100 @@ using ContosoCore.Models.Entities.Base;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Update;
+using ContosoCore.DAL.EF;
+using System.Linq;
+
 namespace ContosoCore.DAL.Repos.Base
 {
-    public abstract class RepoBase<T> : IDisposable, IRepo<T> where T : class
+    public abstract class RepoBase<T> : IDisposable, IRepo<T> where T : EtittyBase
     {
-
-        public int count => throw new NotImplementedException();
-
-        public int Add(T entity, bool persist = true)
+        protected readonly ContosoCoreContext db;
+        protected DbSet<T> Table;
+        public RepoBase()
         {
-            throw new NotImplementedException();
+            db = new ContosoCoreContext();
+            Table = db.Set<T>();
         }
 
-        public int Delete(T entity, bool persist = true)
+        public RepoBase(DbContextOptions<ContosoCoreContext> options)
         {
-            throw new NotImplementedException();
+            db = new ContosoCoreContext();
+            Table = db.Set<T>();
         }
 
+        public ContosoCoreContext context => db;
+         
+        public int count => Table.Count();
+
+        public virtual int Add(T entity, bool persist = true)
+        {
+            Table.Add(entity);
+            return persist ? SaveChanges() : 0;
+        }
+
+        public virtual int Delete(T entity, bool persist = true)
+        {
+            Table.Remove(entity);
+            return persist ? SaveChanges() : 0;
+        }
+        bool _dsposed = false;
+        public virtual void Dispose(bool disposing)
+        {
+            if (_dsposed)
+            {
+                return;
+            }
+            if (disposing)
+            {
+
+            }
+
+            db.Dispose();
+            _dsposed = true;
+        }
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        public T Find(int? id)
-        {
-            throw new NotImplementedException();
-        }
+        public T Find(int? id) => Table.Find(id);
 
-        public IEnumerable<T> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public virtual IEnumerable<T> GetAll() => Table;
 
-        public T GetFirst()
-        {
-            throw new NotImplementedException();
-        }
+        public T GetFirst() => Table.FirstOrDefault();
 
         public int SaveChanges()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                Console.WriteLine(ex);
+
+                throw;
+            }
+            catch (RetryLimitExceededException ex)
+            {
+                Console.WriteLine(ex);
+
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+
+                throw;
+            }
         }
 
-        public int Update(T entity, bool persist = true)
+        public virtual int Update(T entity, bool persist = true)
         {
-            throw new NotImplementedException();
+            Table.Update(entity);
+            return persist ? SaveChanges() : 0;
+
         }
     }
 }

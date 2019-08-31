@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoCore.Models", "Conto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoCore.DAL", "ContosoCore.Dal\ContosoCore.DAL.csproj", "{ADF4E67F-1A5C-415E-8CDF-6E78BE4BC49F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoCore.API", "ContosoCore.API\ContosoCore.API.csproj", "{39D49F16-FB26-4B50-B33C-8714D1922130}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{ADF4E67F-1A5C-415E-8CDF-6E78BE4BC49F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADF4E67F-1A5C-415E-8CDF-6E78BE4BC49F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADF4E67F-1A5C-415E-8CDF-6E78BE4BC49F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D49F16-FB26-4B50-B33C-8714D1922130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D49F16-FB26-4B50-B33C-8714D1922130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D49F16-FB26-4B50-B33C-8714D1922130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D49F16-FB26-4B50-B33C-8714D1922130}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
